@@ -1,12 +1,13 @@
 package com.zerobase.fastlms.member.service;
 
-import com.zerobase.fastlms.admin.dto.MemberDto;
-import com.zerobase.fastlms.member.service.impl.LoginHistoryServiceImpl;
+import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
 
 import java.util.List;
 
 public interface LoginHistoryService{
     void record(String userId, String ip, String userAgent);
 
-    String getSignInDate(List<MemberDto> members);
+    List<LoginHistoryDto> loginHistory(String userId);
+
+    long getCount(String userId);
 }

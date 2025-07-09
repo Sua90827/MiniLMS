@@ -1,6 +1,7 @@
 package com.zerobase.fastlms.member.service.impl;
 
-import com.zerobase.fastlms.admin.dto.MemberDto;
+import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
+import com.zerobase.fastlms.admin.mapper.LoginHistoryMapper;
 import com.zerobase.fastlms.member.entity.LoginHistory;
 import com.zerobase.fastlms.member.repository.LoginHistoryRepository;
 import com.zerobase.fastlms.member.service.LoginHistoryService;
@@ -15,6 +16,7 @@ import java.util.List;
 public class LoginHistoryServiceImpl implements LoginHistoryService {
 
     private final LoginHistoryRepository loginHistoryRepository;
+    private final LoginHistoryMapper loginHistoryMapper;
 
     @Override
     public void record(String userId, String ip, String userAgent) {
@@ -29,10 +31,14 @@ public class LoginHistoryServiceImpl implements LoginHistoryService {
     }
 
     @Override
-    public String getSignInDate(List<MemberDto> members) {
-        for(MemberDto member : members){
+    public List<LoginHistoryDto> loginHistory(String userId) {
+        List<LoginHistoryDto> list = loginHistoryMapper.selectList(userId);
+        return list;
+    }
 
-        }
-        return "";
+    @Override
+    public long getCount(String userId) {
+        long count = loginHistoryMapper.selectListCount(userId);
+        return count;
     }
 }

@@ -42,6 +42,7 @@ public class MemberDto {
 
     private LocalDateTime lastSignInDate;
 
+
     public static MemberDto of(Member member) {
         
         return MemberDto.builder()

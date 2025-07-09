@@ -100,7 +100,31 @@
             <a href="list.do"> 목록 </a>
 
         </div>
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        No.
+                    </td>
+                    <td>
+                        로그인 일자
+                    </td>
+                    <td>
+                        접속IP
+                    </td>
+                    <td>
+                        접속 UserAgent
+                    </td>
+                </tr>
 
+                <tr th:each="x, iterStat : ${history}">
+                    <td th:text="${#lists.size(history) - iterStat.index}">1</td>
+                    <td th:text="${x.signInDate}"></td>
+                    <td th:text="${x.userIp}"></td>
+                    <td th:text="${x.userAgent}"></td>
+                </tr>
+            </table>
+        </div>
 
     </div>
 

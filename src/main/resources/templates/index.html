@@ -3,14 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>메인 페이지</title>
+    <style>
+        .slider-container {
+            width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slider-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .slider-controls button {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>메인 페이지 </h1>
+    <h1>메인 페이지</h1>
     <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
-    <div>
-        <img src="/files/2021/09/05/6e5170576b0c4c29879e5334dfccab2d.png"/>
+    <div class="slider-container" id="bannerSlider">
+        <div th:each="banner, stat : ${bannerList}" th:class="'slide' + (${stat.index == 0} ? ' active' : '')">
+            <a th:href="${banner.linkUrl}"
+               th:target="${banner.openWay == 'B' ? '_blank' : '_self'}">
+                <img th:src="@{${banner.urlFileName}}" alt="배너 이미지" style="width: 100%; height: auto;">
+            </a>
+        </div>
+
+        <div class="slider-controls">
+            <button type="button" onclick="prevSlide()">◀</button>
+            <button type="button" onclick="nextSlide()">▶</button>
+        </div>
     </div>
 
+    <script>
+        let currentIndex = 0;
+        let slides = document.querySelectorAll('#bannerSlider .slide');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        // 자동 순환
+        setInterval(nextSlide, 5000);
+    </script>
 </body>
 </html>

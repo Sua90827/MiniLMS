@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 화면 </title>
+    <style>
+        .detail table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .detail table th, .detail table td {
+            border:solid 1px #000;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .buttons a, .buttons button {
+            border-width: 0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size: 14px;
+            line-height: 20px;
+            height: 20px;
+            color: #000;
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+<!--        $(document).ready(function() {-->
+<!--            $('#submitForm').on('submit', function() {-->
+<!--                // 에디터의 내용이 textarea에 적용된다.-->
+<!--                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);-->
+<!--            });-->
+<!--        });-->
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('submitForm');
+        const checkbox = document.getElementById('displayCheckbox');
+        const hiddenInput = document.getElementById('displayValue');
+
+        form.addEventListener('submit', function () {
+            hiddenInput.value = checkbox.checked ? 1 : 0;
+        });
+    });
+
+    </script>
+</head>
+<body>
+<!--<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>-->
+<h1>강좌 관리 - 배너 등록</h1>
+
+<div class="detail">
+
+    <form id="submitForm" method="post" enctype="multipart/form-data">
+
+        <table>
+            <tbody>
+            <tr>
+                <th>
+                    배너명
+                </th>
+                <td>
+                    <input th:value="${detail.subject}" type="text" name="subject" required placeholder="배너명 입력" />
+                </td>
+            </tr>
+            <tr>
+                <th>배너 파일</th>
+                <td>
+                    <input type="file" name="file" />
+                    <br />
+                    <img th:if="${detail.urlFileName != null}" th:src="@{${detail.urlFileName}}" alt="현재 이미지" style="max-width: 200px; max-height: 150px; margin-top: 10px;" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    링크 주소
+                </th>
+                <td>
+                    <input th:value="${detail.linkUrl}" type="text" name="linkUrl" required placeholder="링크 주소 입력" />
+                </td>
+            </tr>
+            <tr>
+                <th>오픈 방법</th>
+                <td>
+                    <select name="openWay" required>
+                        <option value="">오픈 방법 선택</option>
+                        <option th:value="S" th:selected="${detail.openWay == 'S'}" th:text="_self"></option>
+                        <option th:value="B" th:selected="${detail.openWay == 'B'}" th:text="_blank"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    정렬 순서
+                </th>
+                <td>
+                    <input th:value="${detail.orderNum}" name="orderNum" required placeholder="정렬 순서 입력"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    공개 여부
+                </th>
+                <td>
+                    <label>
+                        공개
+                        <input type="checkbox" id="displayCheckbox" th:checked="${detail.display == 1}" />
+                    </label>
+                    <input type="hidden" name="display" id="displayValue" value="0" />
+                </td>
+            </tr>
+
+
+
+            </tbody>
+        </table>
+
+        <div class="buttons">
+            <button th:if="${editMode}" type="submit"> 배너 수정 하기 </button>
+            <button th:if="${!editMode}" type="submit"> 배너 등록 하기 </button>
+            <a href="/admin/banner/list.do"> 목록 이동 </a>
+        </div>
+
+    </form>
+</div>
+
+
+<script type="text/javascript" src="/res/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+    var oEditors = [];
+
+    setTimeout(function() {
+
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: oEditors,
+            elPlaceHolder: "contents",
+            sSkinURI: "/res/se2/SmartEditor2Skin.html",
+            fCreator: "createSEditor2"
+        });
+
+
+    }, 100);
+
+</script>
+</body>
+</html>

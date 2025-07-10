@@ -30,36 +30,9 @@ public class MainController {
     private final BannerService bannerService;
     
     @RequestMapping("/")
-    public String index(Model model, BannerParam parameter, HttpServletRequest request) {
+    public String index(Model model) {
         List<BannerDto> bannerList = bannerService.getBanners();
         model.addAttribute("bannerList", bannerList);
-//            parameter.init();
-//            List<BannerDto> bannerList = bannerService.list(parameter);
-//            int totalCount = (bannerList.isEmpty())? 0 : bannerList.size();
-//            String queryString = parameter.getQueryString();
-//            String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
-//            model.addAttribute("list", bannerList);
-//            model.addAttribute("totalCount", totalCount);
-//            model.addAttribute("pager", pagerHtml);
-
-//            return "admin/banner/list";
-
-        /*
-        String userAgent = RequestUtils.getUserAgent(request);
-        String clientIp = RequestUtils.getClientIP(request);
-
-        log.info(userAgent);
-        log.info(clientIp);
-*/
-        /*
-        String email = "satcop@naver.com";
-        String subject = " 안녕하세요. 제로베이스 입니다. ";
-        String text = "<p>안녕하세요.</p><p>반갑습니다.</p>";
-        
-        mailComponents.sendMail(email, subject, text);
-        */
-
-        
         return "index";
     }
     
